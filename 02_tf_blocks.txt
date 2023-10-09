@@ -1,0 +1,95 @@
+https://dev.to/priye/terraforming-your-data-infrastructure-on-aws-a-hands-on-guide-for-data-engineers-58e0
+
+Bblocks:
+	
+	Providers: is the collection of api will be used (aws, azure, gcp, kubernetes )
+	Resources: is the services
+				
+				resource "resource_type" "name"{
+					attribute = ""
+				}
+				
+				To refer: resource_type.name.attribute
+				
+	Variables: parameters in the logic
+	
+				variable "varname"{
+				 type = string, number, map, object
+				 description
+				 default
+				}
+				
+				To refer: var.varname
+				
+	Outputs: output data that will return the module
+			
+			 output "ec2_ip_addr"{
+				value = aws_instance.etl_vm.public_ip
+			 }
+			 
+			 
+	Modules
+	Dynamic Blocks
+	For Each:	
+			
+			my_subnets = {
+			 "a" = {
+			   cidr = "10.0.1.0/26"
+			   az   = "eu-central-1a"
+			 },
+			 "b" = {
+			   cidr = "10.0.2.0/26"
+			   az   = "eu-central-1a"
+			 }
+ 
+ 
+			resource "aws_subnet" "my_subnets" {
+			 for_each          = var.my_subnets
+			 vpc_id            = aws_vpc.my_vpc.id
+			 cidr_block        = each.value.cidr
+			 availability_zone = each.value.az
+
+			}
+			
+			
+	Provider Configuration
+	State Management
+	
+	
+https://spacelift.io/blog/how-to-use-terraform-variables
+
+How to Use Terraform Variables:
+	
+	
+	Local Variables: 
+		
+		locals {
+			attr = ""
+		}
+		
+		To ref: local.attr
+	
+	Terraform Input Variables: used to pass certrain values outside of configuration or module
+							   input variables allow you to pass values before the code execution
+								
+							variable "varname"{
+								type
+								description
+								default
+							}
+							
+							
+							To provide values:
+								
+								1. Default value 
+								2. CLI                terraform plan -var "ami=test" -var "type=t2.nano" 
+								3. .tfvars file  
+	Output Variables: display information to the console
+		
+							output "instance_id" {
+							 value       = aws_instance.myvm.id
+							 description = "AWS EC2 instance ID"
+							 sensitive   = false
+							}
+		
+				

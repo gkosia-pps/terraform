@@ -1,0 +1,66 @@
+https://www.youtube.com/watch?v=7xngnjfIlK4L
+ 
+Set of config files to describe the infrustructure
+
+IaC:
+	
+	Cloud specific:
+					Aws Cloud Formation
+					Azure resource manager
+					Goodle deployment manager
+					
+	Cloud Agnostic:
+					Terraform
+					
+					
+					
+					
+Architectute:
+	
+	1. Terraform State + TerraformConfig => Terraform Core (identify what needs to be done based on current state and configuration)
+	2. Cloud provider (azure, aws, kubernetes                                                                                                                                                                                                                                          ) will find the api calls to update i the infrustructure
+	
+Basic cmmands:
+	
+	terraform init: initialize a project
+
+    terraform fmt:  	scan the tf files in folder and format them
+
+    terraform validate: scan the tf files in folder and check the syntax
+    
+	terraform plan: compare current state with config file and figure out what changes
+						
+					Terraform config (Desired state)
+					Terraform  (Actual state)
+					
+					
+	terraform apply: apply changes
+					 
+					 It will run the api calls to deploy the actual state
+					 
+	terraform destroy: resources cleanup
+	
+	
+	
+	
+	State file: a json file that contains information about the resources of the infrustructure
+					a.Metadata of resources`
+					b.Data
+					c.Sensitive data (database password..) 
+				
+				
+Backends:
+	
+	Terraform cloud:
+		
+		Create an oranization 
+		Create workspaces
+		
+		In config file for terraform element specify backend remote and the organization and workspace
+		
+	Remote backend:
+		
+		AWS: add the file to an s3 bucket and dynamoDB for locking mechanism
+		
+		Steps: Using local backed create the s3 and Dynamodb(bootstrap)
+			   Change the backed to the remote buckend
